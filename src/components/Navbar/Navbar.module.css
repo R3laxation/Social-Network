@@ -1,0 +1,13 @@
+.nav {
+    grid-area: n;
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    padding: 20px;
+}
+
+.item a{
+    text-decoration: none;
+    color: white;
+}
+.item a.active{
+    color: gold;
+}

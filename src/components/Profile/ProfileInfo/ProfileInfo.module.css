@@ -1,0 +1,11 @@
+.dashboard {
+    height: 20px;
+    width: auto;
+    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+    padding: 20px;
+}
+
+.descr {
+    padding: 20px;
+}
+
