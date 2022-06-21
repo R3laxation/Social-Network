@@ -1,5 +1,5 @@
-import {addPost, setUsersProfile, updateNewPostText} from "./Profile-reducer";
-import {sendMessageBodyCreator, updateNewMessageBodyCreator} from "./Dialogs-reducer";
+import {addPost, setUsersProfile, setStatus} from "./Profile-reducer";
+import {sendMessageBodyCreator} from "./Dialogs-reducer";
 import {
     setCurrentPage,
     setUsers,
@@ -10,6 +10,7 @@ import {
     unfollowSuccess
 } from "./Users-reducer";
 import {setAuthUserData} from "./Auth-reducer";
+import {initializedSuccess} from "./App-reducer";
 
 // export type StoreType = {
 //     _state: StateType
@@ -50,8 +51,6 @@ import {setAuthUserData} from "./Auth-reducer";
 
 export type ActionsType =
     AddPostActionType
-    | UpdateNewPostTextActionType
-    | UpdateNewMessageBodyActionType
     | SendMessageActionType
     | FollowedUserActionType
     | UnFollowedUserActionType
@@ -62,10 +61,10 @@ export type ActionsType =
     | setUsersProfileType
     | setAuthUsersData
     | toogleFollowingProgressType
+    | setStatusType
+    | initializedSuccess
 
 export type AddPostActionType = ReturnType<typeof addPost>;
-export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostText>;
-export type UpdateNewMessageBodyActionType = ReturnType<typeof updateNewMessageBodyCreator>;
 export type SendMessageActionType = ReturnType<typeof sendMessageBodyCreator>;
 export type FollowedUserActionType = ReturnType<typeof followSuccess>;
 export type UnFollowedUserActionType = ReturnType<typeof unfollowSuccess>;
@@ -76,6 +75,8 @@ export type toogleIsFetchingType = ReturnType<typeof toogleIsFetching>;
 export type setUsersProfileType = ReturnType<typeof setUsersProfile>;
 export type setAuthUsersData = ReturnType<typeof setAuthUserData>;
 export type toogleFollowingProgressType = ReturnType<typeof toogleFollowingProgress>;
+export type setStatusType = ReturnType<typeof setStatus>;
+export type initializedSuccess = ReturnType<typeof initializedSuccess>
 
 // export const store: StoreType = {
 //     _state: {

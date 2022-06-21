@@ -8,7 +8,7 @@ type PreloaderPropsType = {
 export const Preloader = (props: PreloaderPropsType) => {
     return (
         <div style={{backgroundColor: "white"}}>
-            <img src={preloader}/>
+            <img src={preloader} alt={'preloader'}/>
         </div>
     )
 

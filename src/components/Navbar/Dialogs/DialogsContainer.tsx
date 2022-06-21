@@ -2,9 +2,8 @@ import React from "react";
 import {
     DialogsPageStateType,
     sendMessageBodyCreator,
-    updateNewMessageBodyCreator
 } from "../../../Redux/Dialogs-reducer";
-import {Dialogs} from "./Dialogs";
+import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../Redux/Redux-store";
 import {compose, Dispatch} from "redux";
@@ -16,8 +15,7 @@ export type MapStateToPropsType = {
     dialogsPage: DialogsPageStateType,
 }
 export type MapDispatchToPropsType = {
-    onChangeHandler: (body: string) => void
-    onSendMessageClick: () => void
+    onSendMessageClick: (newMessageBody: string) => void
 }
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -27,16 +25,13 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        onChangeHandler: (body: string) => {
-            dispatch(updateNewMessageBodyCreator(body))
-        },
-        onSendMessageClick: () => {
-           dispatch(sendMessageBodyCreator())
+        onSendMessageClick: (newMessageBody: string) => {
+           dispatch(sendMessageBodyCreator(newMessageBody))
         }
     }
 }
 
-export default compose(
+export default compose<React.ComponentType>(
     connect<MapStateToPropsType, MapDispatchToPropsType, DialogsContainerPropsType, AppStateType>(mapStateToProps, mapDispatchToProps),
     withAuthRedirect
 )(Dialogs)

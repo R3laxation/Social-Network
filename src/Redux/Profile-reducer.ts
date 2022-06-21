@@ -1,14 +1,15 @@
 import {ActionsType, setUsersProfileType} from "./Store";
-import {usersAPI} from "../API/api";
+import {profileAPI, usersAPI} from "../API/api";
+import { Dispatch } from "redux";
 
-const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
-const SET_USERS_PROFILE = "SET_USERS_PROFILE";
+const ADD_POST = "samurai-network/profile/ADD-POST";
+const SET_USERS_PROFILE = "samurai-network/profile/SET_USERS_PROFILE";
+const SET_USERS_STATUS = 'samurai-network/profile/SET_USERS_STATUS';
 
 export type ProfilePageStateType = {
     posts: Array<PostsStateType>
-    newPostText: string
     profile: ProfileType | {}
+    status: string
 }
 export type PostsStateType = {
     id: number
@@ -45,33 +46,44 @@ const initialState: ProfilePageStateType = {
         {id: 1, message: "Hi, how are you?", likesCount: "22"},
         {id: 2, message: "It is my first post\"", likesCount: "57"},
     ],
-    newPostText: "",
     profile: {},
+    status: ""
 };
 
 export const profileReducer = (state: ProfilePageStateType = initialState, action: ActionsType): ProfilePageStateType => {
 
     switch (action.type) {
         case ADD_POST: {
-            let newPost = {id: 3, message: state.newPostText, likesCount: "0"}
-            return {...state, posts: [...state.posts, newPost], newPostText: ""}
-        }
-        case UPDATE_NEW_POST_TEXT: {
-            return {...state, newPostText: action.newText}
+            let newPost = {id: 3, message: action.newPostText, likesCount: "0"}
+            return {...state, posts: [...state.posts, newPost]}
         }
         case SET_USERS_PROFILE: {
             return {...state, profile: action.profile}
         }
+        case SET_USERS_STATUS:
+            return {...state, status: action.status}
         default:
             return state
     }
 }
 
-export let addPost= () => ({type: ADD_POST} as const)
-export let updateNewPostText = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const)
+export let addPost = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export let setUsersProfile = (profile: ProfileType) => ({type: SET_USERS_PROFILE, profile} as const)
-export let getUsersProfile = (userID: string) => (dispatch: (action: setUsersProfileType) => void) => {
-    usersAPI.getProfile(userID).then(response => {
+export let setStatus = (status: string) => ({type: SET_USERS_STATUS, status} as const)
+
+
+
+export let getUsersProfile = (userID: string) => async (dispatch: (action: setUsersProfileType) => void) => {
+    let response = await usersAPI.getProfile(userID)
         dispatch(setUsersProfile(response.data))
-    })
+}
+export let getStatus = (userID: string) => async (dispatch: Dispatch) => {
+        let response = await profileAPI.getStatus(userID)
+                dispatch(setStatus(response.data))
+}
+export let updateStatus = (status: string) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.updateStatus(status)
+                if(response.data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
 }

@@ -1,7 +1,5 @@
 import {ActionsType} from "./Store";
-
-const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
-const SEND_MESSAGE = "SEND-MESSAGE";
+const SEND_MESSAGE = "samurai-network/dialogs/SEND-MESSAGE";
 
 // export type DialogsPageStateType = {
 //     dialogs: Array<DialogsStateType>
@@ -34,24 +32,17 @@ const initialState = {
         {id: 4, message: "I'll be back!!!"},
         {id: 5, message: "Bye!"},
     ] as Array<MessagesStateType>,
-    newMessageBody: ""
 };
 
 export const dialogsReducer = (state: DialogsPageStateType = initialState, action: ActionsType): DialogsPageStateType => {
 
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return ({...state, newMessageBody: action.body});
         case SEND_MESSAGE:
-            let body = state.newMessageBody;
-            return ({...state, messages: [...state.messages, {id: 6, message: body}], newMessageBody: ""});
+            let body = action.newMessageBody;
+            return ({...state, messages: [...state.messages, {id: 6, message: body}]});
         default:
             return state
     }
 }
 
-export let updateNewMessageBodyCreator = (body: string) => ({
-    type: UPDATE_NEW_MESSAGE_BODY,
-    body: body
-} as const)
-export let sendMessageBodyCreator = () => ({type: SEND_MESSAGE} as const);
+export let sendMessageBodyCreator = (newMessageBody: string) => ({type: SEND_MESSAGE, newMessageBody} as const);
