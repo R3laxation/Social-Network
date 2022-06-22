@@ -12,7 +12,7 @@ export function Header(props: HeaderPropsType) {
     return (
         <header className={s.header}>
             <img
-                src='https://banner2.cleanpng.com/20180403/egw/kisspng-2017-tesla-model-x-tesla-motors-iphone-x-car-tesla-5ac30fbeb517f5.9739984715227329907418.jpg'
+                src='https://www.vectorkhazana.com/assets/images/products/wolf-Head-5.jpg'
                 alt="logo"/>
             <div className={s.loginBlock}>
                 {props.isAuth

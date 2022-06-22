@@ -1,7 +1,7 @@
-import React, {Suspense} from "react";
+import React from "react";
 import "./App.css";
 import {Navbar} from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Route, withRouter} from "react-router-dom";
 import {Music} from "./components/Navbar/Music/Music";
 import {Settings} from "./components/Navbar/Settings/Settings";
 import {News} from "./components/Navbar/News/News";
@@ -75,9 +75,9 @@ let AppContainer = compose<React.ComponentType>(
 )(App)
 
 export let SamuraiJSApp = () => {
-    return <BrowserRouter>
+    return <HashRouter basename={process.env.PUBLIC_URL}>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }

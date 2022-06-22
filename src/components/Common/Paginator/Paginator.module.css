@@ -8,7 +8,8 @@
     border: 1px solid grey;
 }
 
-.pageNumber .selectedPage {
+.pageNumber.selectedPage {
+    border: 2px solid black;
     font-weight: bold;
-    border-color: black
+
 }
