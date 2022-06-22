@@ -5,6 +5,7 @@ import { Dispatch } from "redux";
 const ADD_POST = "samurai-network/profile/ADD-POST";
 const SET_USERS_PROFILE = "samurai-network/profile/SET_USERS_PROFILE";
 const SET_USERS_STATUS = 'samurai-network/profile/SET_USERS_STATUS';
+const SAVE_PHOTO_SUCCESS = 'samurai-network/profile/SAVE_PHOTO_SUCCESS';
 
 export type ProfilePageStateType = {
     posts: Array<PostsStateType>
@@ -62,6 +63,8 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
         }
         case SET_USERS_STATUS:
             return {...state, status: action.status}
+        case SAVE_PHOTO_SUCCESS:
+            return {...state, profile: { ...state.profile, photos: action.photos}}
         default:
             return state
     }
@@ -70,6 +73,7 @@ export const profileReducer = (state: ProfilePageStateType = initialState, actio
 export let addPost = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export let setUsersProfile = (profile: ProfileType) => ({type: SET_USERS_PROFILE, profile} as const)
 export let setStatus = (status: string) => ({type: SET_USERS_STATUS, status} as const)
+export let savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
 
 
 
@@ -86,4 +90,11 @@ export let updateStatus = (status: string) => async (dispatch: Dispatch) => {
                 if(response.data.resultCode === 0) {
                     dispatch(setStatus(status))
                 }
+}
+
+export let savePhoto = (file: File) => async (dispatch: Dispatch) => {
+    let response = await profileAPI.savePhoto(file)
+    if(response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos))
+    }
 }

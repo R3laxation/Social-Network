@@ -1,4 +1,4 @@
-import {addPost, setUsersProfile, setStatus} from "./Profile-reducer";
+import {addPost, setUsersProfile, setStatus, savePhotoSuccess} from "./Profile-reducer";
 import {sendMessageBodyCreator} from "./Dialogs-reducer";
 import {
     setCurrentPage,
@@ -62,7 +62,8 @@ export type ActionsType =
     | setAuthUsersData
     | toogleFollowingProgressType
     | setStatusType
-    | initializedSuccess
+    | initializedSuccess |
+    savePhotoSuccess
 
 export type AddPostActionType = ReturnType<typeof addPost>;
 export type SendMessageActionType = ReturnType<typeof sendMessageBodyCreator>;
@@ -77,6 +78,7 @@ export type setAuthUsersData = ReturnType<typeof setAuthUserData>;
 export type toogleFollowingProgressType = ReturnType<typeof toogleFollowingProgress>;
 export type setStatusType = ReturnType<typeof setStatus>;
 export type initializedSuccess = ReturnType<typeof initializedSuccess>
+export type savePhotoSuccess = ReturnType<typeof savePhotoSuccess>
 
 // export const store: StoreType = {
 //     _state: {
