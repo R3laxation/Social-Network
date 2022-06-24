@@ -1,4 +1,5 @@
 import axios from "axios";
+import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
 
 const instance = axios.create({
     withCredentials: true,
@@ -20,16 +21,16 @@ export const usersAPI = {
     unfollow(userID: number) {
         return instance.delete(`follow/${userID}`)
     },
-    getProfile(userID: string) {
+    getProfile(userID: number) {
         return profileAPI.getProfile(userID)
     }
 }
 
 export const profileAPI = {
-    getProfile(userID: string) {
+    getProfile(userID: number) {
         return instance.get(`profile/` + userID)
     },
-    getStatus(userID: string) {
+    getStatus(userID: number) {
         return instance.get(`profile/status/` + userID)
     },
     updateStatus(status: string) {
@@ -44,17 +45,26 @@ export const profileAPI = {
                 'Content-type': 'multipart/form-data'
             }
         })
-    }
+    },
+    saveProfile(profile: ProfileFormDataType) {
+        return instance.put(`profile`, profile)
+    },
 }
 
 export const authAPI = {
     me() {
         return instance.get(`auth/me`)
     },
-    login(email: string, password: string | number, rememberMe: boolean = false) {
-        return instance.post('auth/login', {email, password, rememberMe})
+    login(email: string, password: string | number, rememberMe: boolean = false, captcha: null | string = null) {
+        return instance.post('auth/login', {email, password, rememberMe, captcha})
     },
     logout() {
         return instance.delete('auth/login')
+    },
+}
+
+export const securityApi = {
+    getCaptcha() {
+        return instance.get('security/get-captcha-url')
     }
 }

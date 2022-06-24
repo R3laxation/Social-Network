@@ -1,15 +1,15 @@
-import {addPost, setUsersProfile, setStatus, savePhotoSuccess} from "./Profile-reducer";
+import {addPost, savePhotoSuccess, setStatus, setUsersProfile} from "./Profile-reducer";
 import {sendMessageBodyCreator} from "./Dialogs-reducer";
 import {
-    setCurrentPage,
-    setUsers,
-    setTotalUsersCount,
-    toogleIsFetching,
-    toogleFollowingProgress,
     followSuccess,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toogleFollowingProgress,
+    toogleIsFetching,
     unfollowSuccess
 } from "./Users-reducer";
-import {setAuthUserData} from "./Auth-reducer";
+import {setAuthUserData, setCaptchaUrl} from "./Auth-reducer";
 import {initializedSuccess} from "./App-reducer";
 
 // export type StoreType = {
@@ -63,7 +63,7 @@ export type ActionsType =
     | toogleFollowingProgressType
     | setStatusType
     | initializedSuccess |
-    savePhotoSuccess
+    savePhotoSuccess | setCaptchaUrl
 
 export type AddPostActionType = ReturnType<typeof addPost>;
 export type SendMessageActionType = ReturnType<typeof sendMessageBodyCreator>;
@@ -79,6 +79,7 @@ export type toogleFollowingProgressType = ReturnType<typeof toogleFollowingProgr
 export type setStatusType = ReturnType<typeof setStatus>;
 export type initializedSuccess = ReturnType<typeof initializedSuccess>
 export type savePhotoSuccess = ReturnType<typeof savePhotoSuccess>
+export type setCaptchaUrl = ReturnType<typeof setCaptchaUrl>
 
 // export const store: StoreType = {
 //     _state: {

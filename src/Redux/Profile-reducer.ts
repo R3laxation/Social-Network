@@ -1,6 +1,9 @@
 import {ActionsType, setUsersProfileType} from "./Store";
 import {profileAPI, usersAPI} from "../API/api";
 import { Dispatch } from "redux";
+import {ProfileFormDataType} from "../components/Profile/ProfileInfo/ProfileDataForm";
+import {AppStateType, AppThunkType} from "./Redux-store";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = "samurai-network/profile/ADD-POST";
 const SET_USERS_PROFILE = "samurai-network/profile/SET_USERS_PROFILE";
@@ -75,13 +78,11 @@ export let setUsersProfile = (profile: ProfileType) => ({type: SET_USERS_PROFILE
 export let setStatus = (status: string) => ({type: SET_USERS_STATUS, status} as const)
 export let savePhotoSuccess = (photos: any) => ({type: SAVE_PHOTO_SUCCESS, photos} as const)
 
-
-
-export let getUsersProfile = (userID: string) => async (dispatch: (action: setUsersProfileType) => void) => {
+export let getUsersProfile = (userID: number) => async (dispatch: (action: ActionsType) => void) => {
     let response = await usersAPI.getProfile(userID)
         dispatch(setUsersProfile(response.data))
 }
-export let getStatus = (userID: string) => async (dispatch: Dispatch) => {
+export let getStatus = (userID: number) => async (dispatch: Dispatch) => {
         let response = await profileAPI.getStatus(userID)
                 dispatch(setStatus(response.data))
 }
@@ -96,5 +97,16 @@ export let savePhoto = (file: File) => async (dispatch: Dispatch) => {
     let response = await profileAPI.savePhoto(file)
     if(response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
+    }
+}
+
+export let saveProfile = (profile: ProfileFormDataType): AppThunkType => async (dispatch, getState: () => AppStateType) => {
+    const userId = getState().auth.id;
+    let response = await profileAPI.saveProfile(profile)
+    if(response.data.resultCode === 0) {
+        userId && dispatch(getUsersProfile(userId))
+    } else {
+        dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0]}))
+        return Promise.reject(response.data.messages[0])
     }
 }
